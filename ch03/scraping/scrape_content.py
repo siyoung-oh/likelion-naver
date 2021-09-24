@@ -32,7 +32,7 @@ def scrape_content(url):
         # ======== sports_news =========
         sport_content = soup.select_one('#newsEndContents')
         # 해당 tag 가 존재하지 않으면 기본 content return 하고 함수 종료
-        if not raw_news:
+        if not sport_content:
             return content
 
         for tag in sport_content(['div', 'span', 'p', 'br']):
@@ -42,9 +42,9 @@ def scrape_content(url):
         # ========== news_naver ==========
         naver_content = soup.select_one(
             '#articeBody') or soup.select_one('#articleBodyContents')
-        
+
         # 해당 tag 가 존재하지 않으면 기본 content return 하고 함수 종료
-        if not raw_news:
+        if not naver_content:
             return content
 
         for tag in naver_content(['div', 'span', 'p', 'br', 'script']):
