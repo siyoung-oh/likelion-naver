@@ -140,9 +140,12 @@ def scrape_image_url(url):
 
     # BeautifulSoup4 사용해서 html 요소에 각각 접근하기 쉽게 만듦.
     soup = BeautifulSoup(data.text, 'html.parser')
-
+    
     # image url 가져오기 - og:image
     og_img_el = soup.select_one('meta[property="og:image"]')
+    # 만약 해당 tag가 없으면 바로 기본 image_url 을 반환하고 함수 종료
+    if not og_img_el:
+        return image_url
 
     image_url = og_img_el['content']
     if 'http' not in image_url:
@@ -167,7 +170,12 @@ def scrap_content(url):
         content = raw_news.text.strip()
         
     elif 'news.naver.com' in url:
-        raw_news = soup.select_one('#articeBody') or soup.select_one('#articleBodyContents')    #
+        raw_news = soup.select_one('#articeBody') or soup.select_one('#articleBodyContents')
+        
+        # 해당 tag 가 존재하지 않으면 기본 content return 하고 함수 종료
+        if not raw_news:
+            return content
+
         for tag in raw_news(['div', 'span', 'p', 'br', 'script']):
             tag.decompose()
 
