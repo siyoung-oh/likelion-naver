@@ -42,10 +42,10 @@ def scrape_image_url(url):
     # image url 가져오기 - og:image
     og_img_el = soup.select_one('meta[property="og:image"]')
 
-    image_url = og_img_el['content']
     if not og_img_el:
         return image_url
 
+    image_url = og_img_el['content']
     if 'http' not in image_url:
         image_url = 'http:' + image_url
 
